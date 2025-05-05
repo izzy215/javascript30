@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS Drum Kit</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="https://fav.farm/🔥" />
+</head>
+<body>
+
+
+  <div class="keys">
+    <div data-key="65" class="key">
+      <kbd>A</kbd>
+      <span class="sound">clap</span>
+    </div>
+    <div data-key="83" class="key">
+      <kbd>S</kbd>
+      <span class="sound">hihat</span>
+    </div>
+    <div data-key="68" class="key">
+      <kbd>D</kbd>
+      <span class="sound">kick</span>
+    </div>
+    <div data-key="70" class="key">
+      <kbd>F</kbd>
+      <span class="sound">openhat</span>
+    </div>
+    <div data-key="71" class="key">
+      <kbd>G</kbd>
+      <span class="sound">boom</span>
+    </div>
+    <div data-key="72" class="key">
+      <kbd>H</kbd>
+      <span class="sound">ride</span>
+    </div>
+    <div data-key="74" class="key">
+      <kbd>J</kbd>
+      <span class="sound">snare</span>
+    </div>
+    <div data-key="75" class="key">
+      <kbd>K</kbd>
+      <span class="sound">tom</span>
+    </div>
+    <div data-key="76" class="key">
+      <kbd>L</kbd>
+      <span class="sound">tink</span>
+    </div>
+  </div>
+
+  <audio data-key="65" src="sounds/clap.wav"></audio>
+  <audio data-key="83" src="sounds/hihat.wav"></audio>
+  <audio data-key="68" src="sounds/kick.wav"></audio>
+  <audio data-key="70" src="sounds/openhat.wav"></audio>
+  <audio data-key="71" src="sounds/boom.wav"></audio>
+  <audio data-key="72" src="sounds/ride.wav"></audio>
+  <audio data-key="74" src="sounds/snare.wav"></audio>
+  <audio data-key="75" src="sounds/tom.wav"></audio>
+  <audio data-key="76" src="sounds/tink.wav"></audio>
+
+<script>
+  // kewdown event 
+window.addEventListener('keydown',function(e){
+  //입력값 해당 audio 
+  const audio = document.querySelector(`audio[data-key="${e.keyCode}"`);
+  const key = document.querySelector(`.key[data-key="${e.keyCode}"`);
+  //해당요소 없으면 return
+  if(!audio)return; 
+
+  //audio 0초로 이동(반복재생위함)
+  audio.currentTime =0;
+  //audio 재생
+  audio.play();
+  //재생중 css 추가
+  key.classList.add('playing');
+
+})
+
+//animation div 요소들
+const keys = document.querySelectorAll('.key');
+//anmation remove
+keys.forEach((key) => {
+  key.addEventListener('transitionend',function(){
+    key.classList.remove('playing');
+  })
+    
+  })
+  
+/*e.propertyName !== 'transform'은 transitionend 이벤트 중에서도 transform 속성에만 반응하게 만든 것
+
+불필요한 이벤트 중복 처리 방지를 위해 필터링 조건이 필요
+
+더 잘 쓰려면 → Event 객체, CSS 트랜지션 원리, 함수 구조화 공부*/
+</script>
+
+</body>
+</html>
