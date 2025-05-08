@@ -19,14 +19,26 @@
     <input id="base" type="color" name="base" value="#ffc600">
   </div>
 
-  <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
+  <img src="./산마늘.jpg" style="width:500px">
 
   <style>
 
     /*
       misc styles, nothing to do with CSS variables
     */
-
+    :root{
+        --spacing:10px  
+        --blur:10px;
+        --base:10;
+    }
+    img {
+      padding: var(--spacing);
+      background: var(--base);
+      filter: blur(var(--blur));
+    }
+    .hl{
+      color: var(--base);
+    }
     body {
       text-align: center;
       background: #193549;
@@ -43,10 +55,25 @@
     input {
       width: 100px;
     }
+
   </style>
 
   <script>
-  </script>
+
+    const inputs = document.querySelectorAll('input');
+
+    inputs.forEach(input => {
+      input.addEventListener('change',handleCss)
+      input.addEventListener('mousemove', handleCss)
+    })
+
+    function handleCss(){
+      
+      const suffix = this.dataset.sizing||''
+      document.documentElement.style.setProperty(`--${this.name}`,this.value + suffix)
+
+    }
+</script>
 
 </body>
 </html>
